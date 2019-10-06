@@ -1,0 +1,39 @@
+.header {
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 45px;
+}
+
+.header_list {
+  display: flex;
+  margin-bottom: 0;
+  margin-left: 100px;
+}
+
+.header_list li {
+  list-style: none;
+  margin-right: 30px;
+  font-size: 25px;
+  cursor: pointer;
+  color: rgb(49, 175, 66);
+}
+
+@media (max-width: 768px) {
+  .header_list {
+    margin-left: 0px;
+  }
+  .header_list li {
+    margin-right: 10px;
+  }
+}
+@media (max-width: 510px) {
+  .header_list {
+    margin-left: -30px;
+  }
+}

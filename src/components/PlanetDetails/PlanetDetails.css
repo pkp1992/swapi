@@ -1,0 +1,34 @@
+.single {
+    background-color: rgba(139, 139, 139, 0.548);
+    padding: 20px;
+    border-radius: 15px;
+    width: 400px;
+    display: flex;
+}
+
+.single img {
+    width: 150px;
+    height: 150px;
+    margin-right: 15px;
+}
+
+
+.single ul li {
+    font-size: 14px;
+    border-top: 1px solid #fff;
+    padding: 5px;
+    list-style: none;
+}
+
+@media(max-width: 1200px) {
+    .single {
+        width: 100%;
+        margin-top: 30px;
+    }
+}
+@media(max-width: 560px) {
+    .single {
+       flex-direction: column;
+       align-items: center;
+    }
+}
