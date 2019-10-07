@@ -62,5 +62,5 @@
       margin-top: 15px;
       color: #fff;
       font-size: 18px;
-      outline: none;
+      outline: none !important;
   }
