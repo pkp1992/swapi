@@ -4,7 +4,8 @@ import "./App.css";
 import Header from "../Header";
 import RandomPlanet from "../RandomPlanet";
 import ItemList from "../ItemList";
-import PlanetDetails from "../PlanetDetails";
+// import PlanetDetails from "../PlanetDetails";
+import PersonDetails from "../PersonDetails";
 
 export default class App extends Component {
   state = {
@@ -21,7 +22,7 @@ export default class App extends Component {
         <RandomPlanet />
         <div className="main">
           <ItemList onItemSelected={this.onPersonSelected} />
-          <PlanetDetails personId={this.state.selectedPerson}/>
+          <PersonDetails personId={this.state.selectedPerson} />
         </div>
       </div>
     );
