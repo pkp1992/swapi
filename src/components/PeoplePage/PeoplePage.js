@@ -4,7 +4,16 @@ import ItemList from "../ItemList";
 import PersonDetails from "../PersonDetails";
 import ErrorIndicater from "../ErrorIndicater";
 // import ErrorButton from "../ErrorButton";
-import SwapiRequest from '../../services'
+import SwapiRequest from "../../services";
+
+const Row = ({ left, right }) => (
+  <div className="main">
+    <div className="main_block">
+      {left}
+      {right}
+    </div>
+  </div>
+);
 
 export default class PeoplePage extends Component {
   swapiService = new SwapiRequest();
@@ -19,24 +28,27 @@ export default class PeoplePage extends Component {
   onPersonSelected = id => {
     this.setState({ selectedPerson: id });
   };
+
   render() {
+    const itemList = (
+      <ItemList
+        onItemSelected={this.onPersonSelected}
+        getData={this.swapiService.getAllPeople}
+        renderItem={({ name, gender, birthYear }) =>
+          `${name} (${gender}, ${birthYear})`
+        }
+      />
+    );
+    const personDetails = (
+      <PersonDetails personId={this.state.selectedPerson} />
+    );
     if (this.state.hasError) {
       return <ErrorIndicater />;
     }
     return (
       <Fragment>
-        <div className="main">
-          <div className="main_block">
-            <ItemList
-              onItemSelected={this.onPersonSelected}
-              getData={this.swapiService.getAllPeople}
-              renderItem={({ name, gender, birthYear }) =>
-                `${name} (${gender}, ${birthYear})`
-              }
-            />
-            <PersonDetails personId={this.state.selectedPerson} />
-          </div>
-        </div>
+        <Row left={itemList} right={personDetails} />
+        <Row left="Foo" right="Bar" />
       </Fragment>
     );
   }
