@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import "./ItemList.css";
-import SwapiRequest from "../../services/";
 import Spinner from "../Spinner";
 import ErrorIndicater from "../ErrorIndicater";
 export default class ItemList extends Component {
-  swapiService = new SwapiRequest();
   state = {
-    peopleList: [],
+    itemList: [],
     loading: true,
     id: null,
     errorIndicator: false
@@ -17,27 +15,30 @@ export default class ItemList extends Component {
   };
 
   componentDidMount() {
-    this.swapiService
-      .getAllPeople()
-      .then(peopleList => this.onloadPeople(peopleList))
+    const { getData } = this.props;
+    getData()
+      .then(itemList => this.onloadItem(itemList))
       .catch(this.onError);
   }
-  onloadPeople = peopleList => {
-    this.setState({ peopleList, loading: false });
+  onloadItem = itemList => {
+    this.setState({ itemList, loading: false });
   };
-  renderItem = arr => {
-    return arr.map(({ name, id }) => {
+  renderItems = arr => {
+    const {renderItem} = this.props 
+    return arr.map((item) => {
+      const {id} = item;
+      const lable = renderItem(item);
       return (
         <li key={id} onClick={() => this.props.onItemSelected(id)}>
-          {name}
+          {lable}
         </li>
       );
     });
   };
 
   render() {
-    const { peopleList, loading, errorIndicator } = this.state;
-    const items = this.renderItem(peopleList);
+    const { itemList, loading, errorIndicator } = this.state;
+    const items = this.renderItems(itemList);
 
     let hasData = !(loading || errorIndicator);
     let error = errorIndicator ? <ErrorIndicater /> : null;
