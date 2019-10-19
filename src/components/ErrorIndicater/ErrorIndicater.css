@@ -11,8 +11,8 @@
 }
 
 .error-indicator img {
-    width: 64px;
-    height: 64px;
+    width: 64px !important;
+    height: 64px !important;
     display: block;
     margin: 0 auto;
 }

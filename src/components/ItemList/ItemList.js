@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import "./ItemList.css";
 import Spinner from "../Spinner";
 import ErrorIndicater from "../ErrorIndicater";
@@ -24,10 +24,9 @@ export default class ItemList extends Component {
     this.setState({ itemList, loading: false });
   };
   renderItems = arr => {
-    const {renderItem} = this.props 
-    return arr.map((item) => {
-      const {id} = item;
-      const lable = renderItem(item);
+    return arr.map(item => {
+      const { id } = item;
+      const lable = this.props.children(item);
       return (
         <li key={id} onClick={() => this.props.onItemSelected(id)}>
           {lable}
@@ -35,22 +34,22 @@ export default class ItemList extends Component {
       );
     });
   };
-
+  
   render() {
     const { itemList, loading, errorIndicator } = this.state;
     const items = this.renderItems(itemList);
-
+    
     let hasData = !(loading || errorIndicator);
     let error = errorIndicator ? <ErrorIndicater /> : null;
     let load = loading ? <Spinner /> : null;
     let content = hasData ? items : null;
 
     return (
-      <div className="list">
+      <Fragment>
         {error}
         {load}
         <ul>{content}</ul>
-      </div>
+      </Fragment>
     );
   }
 }

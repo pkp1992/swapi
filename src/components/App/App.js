@@ -3,11 +3,10 @@ import "./App.css";
 import SwapiRequest from "../../services";
 import Header from "../Header";
 import RandomPlanet from "../RandomPlanet";
-import ItemList from "../ItemList";
-// import PlanetDetails from "../PlanetDetails";
-import PersonDetails from "../PersonDetails";
 import ErrorIndicater from "../ErrorIndicater";
 import PeoplePage from "../PeoplePage";
+import ViewRow from "../ViewRow";
+import ItemDetails from "../ItemDetails";
 
 export default class App extends Component {
   swapiService = new SwapiRequest();
@@ -19,38 +18,37 @@ export default class App extends Component {
     this.setState({ hasError: true });
   }
 
-  // onPersonSelected = id => {
-  //   this.setState({ selectedPerson: id });
-  // };
   render() {
+    const {
+      getPeople,
+      getStarships,
+      getPeopleImage,
+      getStarshipImage
+    } = this.swapiService;
     if (this.state.hasError) {
       return <ErrorIndicater />;
     }
+    const personDetails = (
+      <ItemDetails
+        getData={getPeople}
+        itemId={11}
+        getImageUrl={getPeopleImage}
+      ></ItemDetails>
+    );
+    const starshipDetails = (
+      <ItemDetails
+        getData={getStarships}
+        itemId={5}
+        getImageUrl={getStarshipImage}
+      ></ItemDetails>
+    );
+
     return (
       <div className="container">
         <Header />
         <RandomPlanet />
-        <PeoplePage />
-        <div className="main">
-          <div className="main_block">
-            <ItemList
-              onItemSelected={this.onPersonSelected}
-              getData={this.swapiService.getAllStarships}
-              renderItem={({ name, model }) => `${name} (${model})`}
-            />
-            <PersonDetails personId={this.state.selectedPerson} />
-          </div>
-        </div>
-        <div className="main">
-          <div className="main_block">
-            <ItemList
-              onItemSelected={this.onPersonSelected}
-              getData={this.swapiService.getAllPlanet}
-              renderItem={({ name, diameter }) => `${name} (${diameter} km)`}
-            />
-            <PersonDetails personId={this.state.selectedPerson} />
-          </div>
-        </div>
+        {/* <PeoplePage /> */}
+        <ViewRow left={personDetails} right={starshipDetails}></ViewRow>
       </div>
     );
   }
