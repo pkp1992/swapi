@@ -37,7 +37,7 @@ export default class SwapiRequest {
     return res.results.map(this._transformStarhip);
   };
 
-  getStarships = async id => {
+  getStarship = async id => {
     let starship = await this.getResponse(`starships/${id}`);
     return this._transformStarhip(starship);
   };
@@ -64,6 +64,7 @@ export default class SwapiRequest {
       model: starships.model,
       manufacturer: starships.manufacturer,
       costInCredits: starships.cost_in_credits,
+      length: starships.length,
       passengers: starships.passengers,
       cargoCapacity: starships.cargo_capacity
     };

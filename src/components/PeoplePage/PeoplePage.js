@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import "./PeoplePage.css";
-import ItemList from "../ItemList";
-import ItemDetails from "../ItemDetails";
 import ErrorIndicater from "../ErrorIndicater";
 import SwapiRequest from "../../services";
 import ViewRow from "../ViewRow";
-import ErrorButton from "../ErrorButton";
 import ErrorBoundry from "../ErrorBoundry";
-
-
+import { PeopleList, PeopleDetails } from "../swComponents";
 
 export default class PeoplePage extends Component {
   swapiService = new SwapiRequest();
@@ -16,26 +12,21 @@ export default class PeoplePage extends Component {
     selectedItem: null
   };
 
-
   onItemSelected = id => {
     this.setState({ selectedItem: id });
   };
   render() {
     const itemList = (
       <ErrorBoundry>
-      <ItemList
-        onItemSelected={this.onItemSelected}
-        getData={this.swapiService.getAllPeople}
-        renderItem={({ name, gender, birthYear }) =>
-          `${name} (${gender}, ${birthYear})`
-        }
-        >
-        {i => `${i.name} (${i.birthYear})`}
-      </ItemList>
-        <ErrorButton></ErrorButton>
-    </ErrorBoundry>
+        <PeopleList onItemSelected = {this.onItemSelected} />
+      </ErrorBoundry>
     );
-    const ItemDetail = <ItemDetails itemId={this.state.selectedItem} />;
+    const ItemDetail = (
+      <ErrorBoundry>
+        <PeopleDetails itemId={this.state.selectedItem} />
+      </ErrorBoundry>
+    );
+    
     if (this.state.hasError) {
       return <ErrorIndicater />;
     }

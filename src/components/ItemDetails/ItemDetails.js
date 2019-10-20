@@ -4,6 +4,16 @@ import SwapiRequest from "../../services";
 import Spinner from "../Spinner";
 import ErrorIndicater from "../ErrorIndicater";
 
+const Record = ({item, field, lable}) => {
+  return (
+    <li>
+      <span>{lable}: </span>
+      <span> {item[field]}</span>
+    </li>
+  );
+}
+export { Record };
+
 export default class ItemDetails extends Component {
   swapi = new SwapiRequest();
   state = {
@@ -42,7 +52,7 @@ export default class ItemDetails extends Component {
   }
 
   render() {
-    const { loading, errorIndicator, item, image } = this.state;
+    const { loading, errorIndicator, image, item } = this.state;
     if (!item) {
       return (
         <Fragment>
@@ -57,43 +67,27 @@ export default class ItemDetails extends Component {
     const hasData = !(loading || errorIndicator);
     const hasError = !loading && errorIndicator;
     const loader = loading ? <Spinner /> : null;
-    const data = hasData ? <Item image={image} item={item} /> : null;
-    const error = hasError ? <ErrorIndicater /> : null;
-    return (
-      // <div className="single">
-      <Fragment>
-        {loader}
-        {data}
-        {error}
-      </Fragment>
-      // </div>
-    );
-  }
-}
-
-class Item extends Component {
-  render() {
-    const {item: { name, gender, birthYear, eyeColor} ,  image } = this.props;
-    return (
+    const {name} = item
+    const data = hasData ? (
       <Fragment>
         <img src={image} alt={name} />
         <div className="single_discription">
           <h2>{name}</h2>
           <ul>
-            <li>
-              <span>Gender: </span>
-              <span>{gender}</span>
-            </li>
-            <li>
-              <span>Birth Year: </span>
-              <span>{birthYear}</span>
-            </li>
-            <li>
-              <span>Eye Color: </span>
-              <span>{eyeColor}</span>
-            </li>
+            {React.Children.map(this.props.children, (child) => {
+              return React.cloneElement(child, {item})
+            })}
           </ul>
         </div>
+      </Fragment>
+    ) : null;
+    const error = hasError ? <ErrorIndicater /> : null;
+    
+    return (
+      <Fragment>
+        {loader}
+        {data}
+        {error}
       </Fragment>
     );
   }

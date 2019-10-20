@@ -1,28 +1,7 @@
 import React, { Component, Fragment } from "react";
 import "./ItemList.css";
-import Spinner from "../Spinner";
-import ErrorIndicater from "../ErrorIndicater";
-export default class ItemList extends Component {
-  state = {
-    itemList: [],
-    loading: true,
-    id: null,
-    errorIndicator: false
-  };
 
-  onError = () => {
-    this.setState({ errorIndicator: true, loading: false });
-  };
-
-  componentDidMount() {
-    const { getData } = this.props;
-    getData()
-      .then(itemList => this.onloadItem(itemList))
-      .catch(this.onError);
-  }
-  onloadItem = itemList => {
-    this.setState({ itemList, loading: false });
-  };
+ class ItemList extends Component {
   renderItems = arr => {
     return arr.map(item => {
       const { id } = item;
@@ -36,20 +15,15 @@ export default class ItemList extends Component {
   };
   
   render() {
-    const { itemList, loading, errorIndicator } = this.state;
-    const items = this.renderItems(itemList);
+    const { data } = this.props;
+    const items = this.renderItems(data);
     
-    let hasData = !(loading || errorIndicator);
-    let error = errorIndicator ? <ErrorIndicater /> : null;
-    let load = loading ? <Spinner /> : null;
-    let content = hasData ? items : null;
-
     return (
       <Fragment>
-        {error}
-        {load}
-        <ul>{content}</ul>
+        <ul>{items}</ul>
       </Fragment>
     );
   }
 }
+
+export default ItemList;
