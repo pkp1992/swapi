@@ -25,7 +25,7 @@ const PeopleDetails = ({itemId}) => {
       </ItemDetails>
     );
 };
-const StarshipDetails = () => ({itemId}) => {
+const StarshipDetails = ({itemId}) => {
     return (
       <ItemDetails
         getData={getStarship}
@@ -38,7 +38,7 @@ const StarshipDetails = () => ({itemId}) => {
       </ItemDetails>
     );
 }
-const PlanetDetails = () => ({itemId}) => {
+const PlanetDetails = ({itemId}) => {
     return (
       <ItemDetails
         getData={getPlanet}

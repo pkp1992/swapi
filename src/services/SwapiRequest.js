@@ -22,7 +22,7 @@ export default class SwapiRequest {
     return this._transformPeople(people);
   };
 
-  getAllPlanet = async () => {
+  getAllPlanets = async () => {
     let res = await this.getResponse("planets");
     return res.results.map(this._transformPlanet);
   };

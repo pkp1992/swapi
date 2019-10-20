@@ -21,7 +21,7 @@ export default class PeoplePage extends Component {
         <PeopleList onItemSelected = {this.onItemSelected} />
       </ErrorBoundry>
     );
-    const ItemDetail = (
+    const itemDetail = (
       <ErrorBoundry>
         <PeopleDetails itemId={this.state.selectedItem} />
       </ErrorBoundry>
@@ -30,6 +30,6 @@ export default class PeoplePage extends Component {
     if (this.state.hasError) {
       return <ErrorIndicater />;
     }
-    return <ViewRow left={itemList} right={ItemDetail} />;
+    return <ViewRow left={itemList} right={itemDetail} />;
   }
 }
