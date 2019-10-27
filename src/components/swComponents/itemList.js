@@ -1,11 +1,6 @@
-import React, { Component } from "react";
-import ViewComponent from "../HOС";
+import React from "react";
+import { ViewComponent, WithSwapiService } from "../HOС";
 import ItemList from "../ItemList";
-import SwapiRequest from "../../services/";
-
-const swapiService = new SwapiRequest();
-
-const { getAllPeople, getAllStarships, getAllPlanets } = swapiService;
 
 const withChildFuncrion = (Wrapped, fn) => {
   return props => <Wrapped {...props}>{fn}</Wrapped>;
@@ -13,10 +8,30 @@ const withChildFuncrion = (Wrapped, fn) => {
 
 const renderName = ({ name }) => <span>{name}</span>;
 
-const ListWithChildren = withChildFuncrion(ItemList, renderName)
+const ListWithChildren = withChildFuncrion(ItemList, renderName);
 
-const PeopleList = ViewComponent(ListWithChildren, getAllPeople);
-const StarshipList = ViewComponent(ListWithChildren, getAllStarships);
-const PlanetList = ViewComponent(ListWithChildren, getAllPlanets);
+const mapPeopleMethodToProps = swapiService => ({
+  getData: swapiService.getAllPeople
+}); 
+const mapStarshipMethodToProps = swapiService => ({
+  getData: swapiService.getAllStarships
+}); 
+const mapPlanetMethodToProps = swapiService => ({
+  getData: swapiService.getAllPlanets
+}); 
+
+
+const PeopleList = WithSwapiService(
+  ViewComponent(ListWithChildren),
+  mapPeopleMethodToProps
+);
+const StarshipList = WithSwapiService(
+  ViewComponent(ListWithChildren),
+  mapStarshipMethodToProps
+);
+const PlanetList = WithSwapiService(
+  ViewComponent(ListWithChildren),
+  mapPlanetMethodToProps
+);
 
 export { PeopleList, StarshipList, PlanetList };

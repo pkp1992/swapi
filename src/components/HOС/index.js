@@ -1,2 +1,4 @@
 import ViewComponent from './ViewComponent'
-export default ViewComponent;
+import WithSwapiService from './WithSwapiService'
+export default  ViewComponent ;
+export { ViewComponent, WithSwapiService }

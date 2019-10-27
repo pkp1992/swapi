@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import Spinner from "../Spinner";
 import ErrorIndicater from "../ErrorIndicater";
+import ErrorBoundry from '../ErrorBoundry'
 
-const ViewComponent = (View, getData) => {
+const ViewComponent = (View) => {
   return class extends Component {
     state = {
       data: [],
@@ -16,7 +17,7 @@ const ViewComponent = (View, getData) => {
     };
 
     componentDidMount() {
-      getData()
+      this.props.getData()
         .then(data => this.onloadItem(data))
         .catch(this.onError);
     }
@@ -31,11 +32,11 @@ const ViewComponent = (View, getData) => {
       let content = hasData ? <View {...this.props} data={data} /> : null;
 
       return (
-        <Fragment>
+        <ErrorBoundry>
           {error}
           {load}
           {content}
-        </Fragment>
+        </ErrorBoundry>
       );
     }
   };

@@ -4,16 +4,9 @@ import SwapiRequest from "../../services";
 import Header from "../Header";
 import RandomPlanet from "../RandomPlanet";
 import ErrorIndicater from "../ErrorIndicater";
-import PeoplePage from "../PeoplePage";
-import ViewRow from "../ViewRow";
-import {
-  PeopleList,
-  PeopleDetails,
-  StarshipList,
-  PlanetList,
-  StarshipDetails,
-  PlanetDetails
-} from "../swComponents";
+import { SwapiserviceProvider } from "../SwapiServiceContext";
+import { PlanetPage, StarshipPage, PeoplePage } from "../Pages";
+import ErrorBoundry from "../ErrorBoundry";
 
 export default class App extends Component {
   swapiService = new SwapiRequest();
@@ -24,26 +17,24 @@ export default class App extends Component {
   componentDidCatch() {
     this.setState({ hasError: true });
   }
-
   render() {
     if (this.state.hasError) {
       return <ErrorIndicater />;
     }
 
     return (
-      <div className="container">
-        <Header />
-        <RandomPlanet />
-        <PeoplePage />
-        <ViewRow
-          left={<StarshipList />}
-          right={<StarshipDetails itemId={5} />}
-        ></ViewRow>
-        <ViewRow
-          left={<PlanetList />}
-          right={<PlanetDetails itemId={5} />}
-        ></ViewRow>
-      </div>
+      <ErrorBoundry>
+        <SwapiserviceProvider value={this.swapiService}>
+          <div className="container">
+            <Header />
+            <RandomPlanet />
+            <PeoplePage />
+            <PlanetPage />
+            <StarshipPage />
+          </div>
+        </SwapiserviceProvider>
+      </ErrorBoundry>
     );
   }
 }
+
