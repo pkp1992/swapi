@@ -1,4 +1,8 @@
 import React from 'react'
+import PropTypes from "prop-types";
+
+
+
 
  const ViewRow = ({ left, right }) => (
    <div className="main">
@@ -8,5 +12,11 @@ import React from 'react'
      </div>
    </div>
  );
+
+ViewRow.propTypes = {
+  left : PropTypes.node,
+  right : PropTypes.node,
+}
+
 
 export default ViewRow;
