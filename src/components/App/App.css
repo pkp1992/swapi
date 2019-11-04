@@ -1,6 +1,6 @@
 .main {
   padding-top: 50px;
-  width: 80%;
+  /* width: 80%; */
   margin: 0px auto;
   display: flex;
   flex-wrap: wrap;
@@ -15,6 +15,10 @@
 
 .list, .single  {
   margin: 15px;
+}
+
+h2 {
+  text-align: center;
 }
 
 @media (max-width: 1200px) {
@@ -36,3 +40,8 @@
 }
 
 
+
+
+/* body {
+  background-color: #222;
+} */

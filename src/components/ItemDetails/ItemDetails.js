@@ -1,17 +1,17 @@
-import React, { Component, Fragment } from "react";
+import React, { Component} from "react";
 import "./ItemDetails.css";
 import SwapiRequest from "../../services";
 import Spinner from "../Spinner";
 import ErrorIndicater from "../ErrorIndicater";
 
-const Record = ({item, field, lable}) => {
+const Record = ({ item, field, lable }) => {
   return (
     <li>
       <span>{lable}: </span>
       <span> {item[field]}</span>
     </li>
   );
-}
+};
 export { Record };
 
 export default class ItemDetails extends Component {
@@ -39,7 +39,12 @@ export default class ItemDetails extends Component {
     }
     getData(itemId)
       .then(item =>
-        this.setState({ item, loading: false, errorIndicator: false, image: getImageUrl(item) })
+        this.setState({
+          item,
+          loading: false,
+          errorIndicator: false,
+          image: getImageUrl(item)
+        })
       )
       .catch(this.onError);
   };
@@ -55,40 +60,43 @@ export default class ItemDetails extends Component {
     const { loading, errorIndicator, image, item } = this.state;
     if (!item) {
       return (
-        <Fragment>
-          {errorIndicator ? (
-            <ErrorIndicater className="errorImg" />
-          ) : (
-            <span>Select a peroson from a list</span>
-          )}
-        </Fragment>
+        <div className="main">
+          <div className="single">
+            {errorIndicator ? (
+              <ErrorIndicater className="errorImg" />
+            ) : (
+              // <span>Select a peroson from a list</span>
+              <Spinner />
+            )}
+          </div>
+        </div>
       );
     }
     const hasData = !(loading || errorIndicator);
     const hasError = !loading && errorIndicator;
     const loader = loading ? <Spinner /> : null;
-    const {name} = item
+    const { name } = item;
     const data = hasData ? (
-      <Fragment>
+      <div className="single">
         <img src={image} alt={name} />
         <div className="single_discription">
           <h2>{name}</h2>
           <ul>
-            {React.Children.map(this.props.children, (child) => {
-              return React.cloneElement(child, {item})
+            {React.Children.map(this.props.children, child => {
+              return React.cloneElement(child, { item });
             })}
           </ul>
         </div>
-      </Fragment>
+      </div>
     ) : null;
     const error = hasError ? <ErrorIndicater /> : null;
-    
+
     return (
-      <Fragment>
+      <div className="main">
         {loader}
         {data}
         {error}
-      </Fragment>
+      </div>
     );
   }
 }

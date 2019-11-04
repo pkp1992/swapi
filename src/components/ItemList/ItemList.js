@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import "./ItemList.css";
 import PropTypes from "prop-types";
 
@@ -24,9 +24,11 @@ class ItemList extends Component {
     const items = this.renderItems(data);
 
     return (
-      <Fragment>
-        <ul>{items}</ul>
-      </Fragment>
+      <div className="main">
+        <div className="list">
+          <ul>{items}</ul>
+        </div>
+      </div>
     );
   }
 }
